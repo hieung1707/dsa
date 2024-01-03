@@ -16,7 +16,6 @@ class Solution:
 
         while idx < len(haystack):
             ch = haystack[idx]
-            # print(ch, needle[needle_idx], recall_idx)
             if ch == needle[0] and idx != idx - needle_idx and not lock:
                 lock = True
                 recall_idx = idx

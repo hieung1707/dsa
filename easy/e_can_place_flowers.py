@@ -40,9 +40,39 @@ class Solution:
 
         return remaining - math.ceil((len(flowerbed) - empty_start_idx - padding_left) / 2) <= 0
 
+    # ----------------------------------------------------------------------------------
+    # re-iteration from 27/12/2023
+    def plant_flowers(self, start: int, end: int, remaining_flowers: int):
+        if start > 0:
+            start += 1
+
+        space = max(end - start, 0) + 1
+        remaining_flowers = max(remaining_flowers - space // 2, 0)
+
+        return remaining_flowers
+
+    def canPlaceFlowersReiterate(self, flowerbed: List[int], n: int) -> bool:
+        start = 0
+        end = 0
+
+        for i in range(len(flowerbed)):
+            if flowerbed[i]:
+                end -= 1
+                n = self.plant_flowers(start, end, n)
+                if n <= 0:
+                    return True
+
+                start = end = i + 1
+            else:
+                end = i + 1
+
+        return self.plant_flowers(start, end, n) == 0
+
 
 if __name__ == "__main__":
     solution = Solution()
+    print(solution.canPlaceFlowers([1, 0, 0, 0, 1], 1))
+    print(solution.canPlaceFlowers([1, 0, 0, 0, 1], 2))
     print(solution.canPlaceFlowers([0, 0, 0, 0, 1, 0, 0, 0, 1], 3))
     print(solution.canPlaceFlowers([0, 0, 0, 1], 1))
     print(solution.canPlaceFlowers([0, 0, 0], 1))
